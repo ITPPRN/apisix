@@ -1,0 +1,6 @@
+ "serverless-post-function": {
+            "phase": "access",
+            "functions": [
+                "return function(conf, ctx) local core = require(\"apisix.core\"); if string.find(ngx.var.uri, \"/logout$\") then local http = require(\"resty.http\"); local httpc = http.new(); local refresh_token = ngx.req.get_headers()[\"X-Refresh-Token\"]; if refresh_token then httpc:request_uri(\"http://10.0.98.203:9080/realms/P2P-service/protocol/openid-connect/logout\", { method = \"POST\", body = \"client_id={{CLIENT_ID}}&client_secret={{CLIENT_SECRET}}&refresh_token=\" .. refresh_token, headers = { [\"Content-Type\"] = \"application/x-www-form-urlencoded\" } }); end; core.response.set_header(\"Set-Cookie\", \"session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; HttpOnly; SameSite=Lax\"); return core.response.exit(302, \"{{REDIRECT_URI_LOGOUT}}\"); end; local b64 = ngx.req.get_headers()[\"X-Userinfo\"]; if b64 then local json_str = ngx.decode_base64(b64); if json_str then local user = core.json.decode(json_str); if user then core.request.set_header(ctx, \"X-User-ID\", user.sub or user.id); core.request.set_header(ctx, \"X-User-Name\", user.preferred_username or user.username); core.request.set_header(ctx, \"X-User-Email\", user.email); end end end end"
+            ]
+        }

@@ -1,0 +1,7 @@
+{
+    "id": "{{UPSTREAM_ID}}",
+    "type": "roundrobin",
+    "nodes": {
+        "{{NODE_ADDRESS}}": 1
+    }
+}

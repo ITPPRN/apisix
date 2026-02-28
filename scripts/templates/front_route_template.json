@@ -1,0 +1,8 @@
+{
+    "uri": "{{URI}}",
+    "name": "front-route-{{FRONT_ID}}",
+    "upstream_id": "front-{{FRONT_ID}}",
+    "plugins": {
+        "prometheus": {}
+    }
+}

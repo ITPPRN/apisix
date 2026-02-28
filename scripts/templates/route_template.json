@@ -1,0 +1,7 @@
+{
+    "uri": "{{URI}}",
+    "name": "{{ROUTE_NAME}}",
+    "service_id": "{{SERVICE_ID}}",
+    "upstream_id": "{{UPSTREAM_ID}}",
+    "priority": 1000
+}

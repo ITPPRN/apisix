@@ -1,0 +1,7 @@
+{
+    "id": "front-{{FRONT_ID}}",
+    "type": "roundrobin",
+    "nodes": {
+        "{{TARGET_ADDRESS}}": 1
+    }
+}

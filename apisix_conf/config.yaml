@@ -1,0 +1,35 @@
+apisix:
+  node_listen: 9080
+  enable_admin: true
+  admin_listen: 9180
+  router:
+    http: 'radixtree_uri'  # Performance สูงสุด ลดคอขวด CPU
+
+deployment:
+  role: traditional
+  role_traditional:
+    config_provider: etcd
+  admin:
+    # 1. เปิดใช้งาน Dashboard ในตัว
+    enable_admin_ui: true 
+    
+    # 2. ตั้งค่า IP ที่อนุญาตให้เข้าจัดการ (Whitelist)
+    # ใน Production ควรใส่ IP เฉพาะของ Admin หรือ VPN
+    allow_admin:
+      - 0.0.0.0/0          # เปิดให้เข้าถึงได้ (แต่ต้องมี Key)
+
+    # 3. ตั้งรหัสผ่าน Admin (สำคัญมาก!)
+    admin_key:
+      - name: admin
+        role: admin
+        key: "edd1c9f034335f136f87ad84b625c8f1" # <--- เปลี่ยนเป็นรหัสของคุณ!
+
+  etcd:
+    host:
+      - "http://etcd:2379"
+
+plugin_attr:
+  prometheus:
+    export_addr:
+      ip: "0.0.0.0"
+      port: 9091
