@@ -9,7 +9,7 @@ services:
     ##network_mode: host
     ports:
       - "9180:9180/tcp"
-      - "19080:9080/tcp"
+      - "19080:8080/tcp"
       - "9091:9091/tcp"
       - "9443:9443/tcp"
       - "9092:9092/tcp"

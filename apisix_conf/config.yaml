@@ -1,5 +1,5 @@
 apisix:
-  node_listen: 9080
+  node_listen: 8080
   enable_admin: true
   admin_listen: 9180
   router:
