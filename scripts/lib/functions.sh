@@ -7,6 +7,7 @@ deploy_service() {
   local secret=$3
   local redirect=$4
   local logoutredi=$5
+  local secretgate=$6
 
   local prefix=$(echo $id | cut -d'-' -f1)
 
@@ -17,7 +18,9 @@ deploy_service() {
        s|{{CLIENT_SECRET}}|$secret|g; \
        s|{{REDIRECT_URI}}|$redirect|g; \
        s|{{SERVICE_PREFIX}}|$prefix|g; \
-       s|{{REDIRECT_URI_LOGOUT}}|$logoutredi|g" ./templates/template_base.json | \
+       s|{{REDIRECT_URI_LOGOUT}}|$logoutredi|g; \
+       s|{{GATEWAY_SECRET}}|$secretgate|g" \
+       ./templates/template_base.json | \
   curl -s -X PUT "$APISIX_URL/apisix/admin/services/$id" \
   -H "X-API-KEY: $ADMIN_KEY" -H "Content-Type: application/json" -d @- | jq -r '.key'
 }
