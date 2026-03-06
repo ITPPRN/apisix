@@ -5,4 +5,4 @@
 !/etcd_data/.keep
 
 .env
-*.env
+.env.*

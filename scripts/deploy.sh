@@ -26,13 +26,13 @@ deploy_service "front-p2p" "$SERVICE_P2P_CLIENT_ID" "$SERVICE_P2P_CLIENT_SECRET"
 
 # 4. สร้าง Services (ตัวจัดการ Auth)
 deploy_service "p2p-service" "$SERVICE_P2P_CLIENT_ID" "$SERVICE_P2P_CLIENT_SECRET" "http://localhost:19080/p2p/v1/callback" "http://localhost:19080/p2p/v1/login" "$P2P_GATEWAY_SECRET"
-deploy_service "kpi-service" "$SERVICE_KPI_CLIENT_ID" "$SERVICE_KPI_CLIENT_SECRET" "http://localhost:19080/kpi/callback" "http://localhost:19080/kpi/hello" "$KPI_GATEWAY_SECRET"
-deploy_service "zen-service" "$SERVICE_ZEN_CLIENT_ID" "$SERVICE_ZEN_CLIENT_SECRET" "http://localhost:19080/zen/callback" "http://localhost:19080/zen/hello" "$ZEN_GATEWAY_SECRET"
+# deploy_service "kpi-service" "$SERVICE_KPI_CLIENT_ID" "$SERVICE_KPI_CLIENT_SECRET" "http://localhost:19080/kpi/callback" "http://localhost:19080/kpi/hello" "$KPI_GATEWAY_SECRET"
+# deploy_service "zen-service" "$SERVICE_ZEN_CLIENT_ID" "$SERVICE_ZEN_CLIENT_SECRET" "http://localhost:19080/zen/callback" "http://localhost:19080/zen/hello" "$ZEN_GATEWAY_SECRET"
 
 deploy_route "front-p2p-route" "/front-p2p/*" "front-p2p" "front-upstream"
 # 5. สร้าง Routes (ตัวเปิดประตูรับ Traffic)
 deploy_route "p2p-route" "/p2p/v1/*" "p2p-service" "p2p-upstream"
-deploy_route "kpi-route" "/kpi/v1/*" "kpi-service" "mock-upstream"
-deploy_route "zen-route" "/zen/v1/*" "zen-service" "mock-upstream"
+# deploy_route "kpi-route" "/kpi/v1/*" "kpi-service" "mock-upstream"
+# deploy_route "zen-route" "/zen/v1/*" "zen-service" "mock-upstream"
 
 echo "--- Deployment Finished ---"

@@ -1,0 +1,33 @@
+stages:
+  - deploy
+
+deploy_apisix_direct_api:
+  stage: deploy
+  image: alpine:latest
+  tags:
+    - internal
+  
+  before_script:
+    # 1. ติดตั้งโปรแกรมที่ deploy.sh ต้องใช้ (bash, curl, jq)
+    - apk add --update bash curl jq
+
+  script:
+    - echo "🚀 Deploying to APISIX via Admin API over VPN..."
+    
+    # 2. สร้างไฟล์ .env ชั่วคราวขึ้นมาเพื่อให้ deploy.sh ดึงไปใช้
+    - echo "SERVICE_P2P_CLIENT_ID=$SERVICE_P2P_CLIENT_ID" >> .env
+    - echo "SERVICE_P2P_CLIENT_SECRET=$SERVICE_P2P_CLIENT_SECRET" >> .env
+    - echo "P2P_GATEWAY_SECRET=$P2P_GATEWAY_SECRET" >> .env
+    # (ถ้ามีตัวแปรอื่นใน .env อีก ก็เขียนบรรทัด echo ต่อๆ กันได้เลยครับ)
+    
+    # 3. พลังแห่ง sed! เราสั่งแก้ไฟล์ deploy.sh อัตโนมัติ 
+    # เปลี่ยนเป้าหมายจาก 127.0.0.1 (เครื่องตัวเอง) ให้เป็น Server IP ของเรา
+    - sed -i "s|http://192.168.1.138:9180|http://$SERVER_IP:9180|g" scripts/deploy.sh
+    
+    # 4. เข้าไปในโฟลเดอร์ scripts แล้วสั่งยิง deploy เลย!
+    - cd scripts && bash ./deploy.sh
+    
+    - echo "✅ Deployment Successful!"
+
+  only:
+    - main
